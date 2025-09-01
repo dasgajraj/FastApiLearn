@@ -1,12 +1,15 @@
 from fastapi import FastAPI
-from . import schemas  # Import Blog schema from local schemas module
-
+import schemas
+import models
+from database import engine
 # Initialize FastAPI application
 app = FastAPI(
     title="Blog API CRUD Operations",
     description="A simple API for blog CRUD operations",
     version="0.1.0"
 )
+
+models.Base.metadata.create_all(engine)
 
 @app.post('/blog')
 def create(data: schemas.Blog):
